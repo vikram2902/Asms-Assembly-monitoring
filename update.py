@@ -4,6 +4,18 @@ import time
 from gpiozero import Button
 from signal import pause
 from datetime import datetime
+import logging
+
+# ------------------------
+# Logger Setup
+# ------------------------
+logging.basicConfig(
+    filename="job_cycle_log.txt",
+    format='%(asctime)s %(message)s',
+    filemode='a'
+)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 # ------------------------
 # Configuration
@@ -12,6 +24,7 @@ CAMERA_IP = '192.168.0.1'
 COMMAND_PORT = 2300
 RESULT_PORT = 2300
 TRIGGER_PIN = 17  # BCM pin 17 (physical pin 11)
+CYCLE_JOBS = 3
 
 # ------------------------
 # State variables
@@ -20,6 +33,7 @@ latest_result = None
 current_job = 1
 connected_sock = None
 trigger_received = threading.Event()
+operator_name = ""
 
 # ------------------------
 # Build job and trigger commands
@@ -59,9 +73,13 @@ def on_trigger():
 # Log successful jobs
 # ------------------------
 def log_passed_job(job_number):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open("job_pass_log.txt", "a") as f:
-        f.write(f"[{timestamp}] Job {job_number} PASSED\n")
+    logger.info(f"Job {job_number} PASSED")
+
+# ------------------------
+# Log cycle completion
+# ------------------------
+def log_cycle_completion(cycle_number, cycle_time):
+    logger.info(f"Cycle {cycle_number} completed by {operator_name} in {cycle_time:.2f} seconds")
 
 # ------------------------
 # Handle job execution
@@ -89,15 +107,14 @@ def run_job(job_number):
                 latest_result = None
 
                 if "true" in result:
-                    print(f"[✅] Job {job_number} passed")
+                    print(f" Job {job_number} passed")
                     log_passed_job(job_number)
                     return True
                 elif "false" in result:
-                    print(f"[❌] Job {job_number} failed — retrying...")
-                    # Retry same job immediately
+                    print(f" Job {job_number} failed — retrying...")
                     return False
                 else:
-                    print(f"[⚠️] Unknown result: {result}")
+                    print(f"Unknown result: {result}")
                     return False
             time.sleep(0.05)
     except Exception as e:
@@ -108,9 +125,12 @@ def run_job(job_number):
 # Main Loop
 # ------------------------
 def main():
-    global connected_sock, current_job
+    global connected_sock, current_job, operator_name
 
     try:
+        operator_name = input("Enter operator name: ").strip()
+        print(f"[Operator] {operator_name} started")
+
         print(f"[Startup] Connecting to {CAMERA_IP}:{COMMAND_PORT} ...")
         connected_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         connected_sock.connect((CAMERA_IP, COMMAND_PORT))
@@ -118,33 +138,41 @@ def main():
         # Start result listener thread
         threading.Thread(target=result_listener, daemon=True).start()
 
-        print("\n[System Ready] Waiting for GPIO trigger...")
-        print(f"[System] Starting from job {current_job}")
         # GPIO setup
         trigger = Button(TRIGGER_PIN, pull_up=False)
         trigger.when_pressed = on_trigger
 
-      #  print("\n[Ready] Waiting for GPIO trigger...")
-       # print(f"[System] Starting from job {current_job}")
+        print("\n[Ready] Waiting for GPIO trigger...")
+        print(f"[System] Starting from job {current_job}")
+
+        cycle_number = 1
 
         while True:
-            trigger_received.wait()  # Block until trigger is detected
-            trigger_received.clear()
+            cycle_start_time = time.time()
+            for job_in_cycle in range(CYCLE_JOBS):
+                trigger_received.wait()
+                trigger_received.clear()
 
-            passed = False
-            while not passed:
-                passed = run_job(current_job)
+                # Run job until passed
+                while True:
+                    jobdone = run_job(current_job)
+                    if jobdone:
+                        break
 
-            print(f"[System] Job {current_job} complete. Waiting for next trigger...")
-            trigger_received.wait()
-            trigger_received.clear()
-            current_job += 1
+                print(f"[System] Job {current_job} complete. Waiting for next trigger...")
+                current_job += 1
+
+            cycle_time = time.time() - cycle_start_time
+            print(f"\n[Cycle  Operator {operator_name} completed a cycle in {cycle_time:.2f} seconds\n")
+            log_cycle_completion(cycle_number, cycle_time)
+            cycle_number += 1
 
     except Exception as e:
         print(f"[Startup Error] {e}")
     finally:
         if connected_sock:
             connected_sock.close()
+            print("[System] Socket closed. Bye!")
 
 if __name__ == "__main__":
     main()
