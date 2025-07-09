@@ -3,7 +3,6 @@ from signal import pause
 
 # Use GPIO17 (Physical pin 11)
 TRIGGER_PIN = 17
-
 # Setup button to detect HIGH signal (3.3V pulse)
 trigger = Button(TRIGGER_PIN, pull_up=False)
 
