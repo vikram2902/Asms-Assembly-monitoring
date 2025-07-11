@@ -82,3 +82,288 @@
 2025-07-09 18:03:57    Job 2 completed by sdfghjk in 8.41s with 9 retries
 2025-07-09 18:04:17    Job 3 completed by sdfghjk in 0.65s with 0 retries
 2025-07-09 18:04:17    Cycle of 3 jobs completed by sdfghjk in 61.63 seconds
+2025-07-10 11:27:45    --- New session started by fgh ---
+2025-07-10 11:28:29    --- New session started by f ---
+2025-07-10 11:57:43    --- New session started by Hari ---
+2025-07-10 11:58:04    --- New session started by Harish ---
+2025-07-10 11:58:07    Job 1 completed by Harish in 1.20s with 0 retries
+2025-07-10 11:58:16    Job 2 completed by Harish in 1.87s with 3 retries
+2025-07-10 11:58:21    Job 3 completed by Harish in 0.20s with 0 retries
+2025-07-10 11:58:21    Cycle of 3 jobs completed by Harish in 17.03 seconds
+2025-07-10 12:22:58    --- New session started by dfghj ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:23:00.505089
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:23:02.218457
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 1 switch command sent at 2025-07-10 12:23:02.220610
+Trigger command sent at 2025-07-10 12:23:03.259006
+2025-07-10 12:23:03.409457    Job 1 completed by dfghj in 1.19s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:23:05.238119
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:23:05.918462
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:23:05.965984
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:23:07.168949
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 2 switch command sent at 2025-07-10 12:23:07.169426
+Trigger command sent at 2025-07-10 12:23:07.369703
+2025-07-10 12:23:08.120779    Job 2 completed by dfghj in 0.95s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:23:10.035939
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:23:11.229617
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 3 switch command sent at 2025-07-10 12:23:11.230105
+Trigger command sent at 2025-07-10 12:23:11.430349
+2025-07-10 12:23:12.031319    Job 3 completed by dfghj in 0.80s with 0 retries
+2025-07-10 12:23:12    Cycle of 3 jobs completed by dfghj in 13.17 seconds
+2025-07-10 12:28:59    --- New session started by gggg ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:29:00.924101
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:29:01.069685
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:29:01.576721
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 1 switch command sent at 2025-07-10 12:29:01.576986
+Trigger command sent at 2025-07-10 12:29:02.615971
+2025-07-10 12:29:02.766452    Job 1 completed by gggg in 1.19s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:29:05.281098
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:29:06.102150
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 2 switch command sent at 2025-07-10 12:29:06.102481
+Trigger command sent at 2025-07-10 12:29:06.302764
+2025-07-10 12:29:07.053944    Job 2 completed by gggg in 0.95s with 0 retries
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:29:08.048322
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:29:08.094646
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:29:08.743545
+Both sensors triggered — proceeding to job at {Dual_Triger}
+Job 3 switch command sent at 2025-07-10 12:29:08.743849
+Trigger command sent at 2025-07-10 12:29:08.944120
+2025-07-10 12:29:09.545006    Job 3 completed by gggg in 0.80s with 0 retries
+2025-07-10 12:29:09    Cycle of 3 jobs completed by gggg in 10.00 seconds
+2025-07-10 12:34:06    --- New session started by aaaaa ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:07.480582
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:08.098889
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:34:08.602061
+Both sensors triggered — proceeding to job at 2025-07-10 12:34:08.602204
+Job 1 switch command sent at 2025-07-10 12:34:08.602300
+Trigger command sent at 2025-07-10 12:34:09.643521
+2025-07-10 12:34:09.794014    Job 1 completed by aaaaa in 1.19s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:10.541641
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:34:10.974466
+Both sensors triggered — proceeding to job at 2025-07-10 12:34:10.974677
+Job 2 switch command sent at 2025-07-10 12:34:10.974979
+Trigger command sent at 2025-07-10 12:34:11.175197
+2025-07-10 12:34:11.976244    Job 2 completed by aaaaa in 1.00s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:12.622829
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:12.631993
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 12:34:12.975114
+Both sensors triggered — proceeding to job at 2025-07-10 12:34:12.975303
+Job 3 switch command sent at 2025-07-10 12:34:12.975501
+Trigger command sent at 2025-07-10 12:34:13.175761
+2025-07-10 12:34:13.776738    Job 3 completed by aaaaa in 0.80s with 0 retries
+2025-07-10 12:34:13    Cycle of 3 jobs completed by aaaaa in 7.63 seconds
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 12:34:14.329337
+2025-07-10 14:24:42    --- New session started by jayanth ---
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 14:24:45.883334
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 14:24:45.885745
+Both sensors triggered — proceeding to job at 2025-07-10 14:24:45.885873
+Job 1 switch command sent at 2025-07-10 14:24:45.886057
+Trigger command sent at 2025-07-10 14:24:46.926727
+2025-07-10 14:24:47.077120    Job 1 completed by jayanth in 1.19s with 0 retries
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 14:25:09.115503
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 14:25:09.115772
+Both sensors triggered — proceeding to job at 2025-07-10 14:25:09.115882
+Job 2 switch command sent at 2025-07-10 14:25:09.115990
+Trigger command sent at 2025-07-10 14:25:09.316220
+2025-07-10 14:25:10.117392    Job 2 completed by jayanth in 1.00s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 14:25:27.329021
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 14:25:27.330788
+Both sensors triggered — proceeding to job at 2025-07-10 14:25:27.331021
+Job 3 switch command sent at 2025-07-10 14:25:27.331211
+Trigger command sent at 2025-07-10 14:25:27.531426
+Job 3 switch command sent at 2025-07-10 14:25:28.082355
+Trigger command sent at 2025-07-10 14:25:28.282634
+Job 3 switch command sent at 2025-07-10 14:25:28.883818
+Trigger command sent at 2025-07-10 14:25:29.084314
+Job 3 switch command sent at 2025-07-10 14:25:29.685529
+Trigger command sent at 2025-07-10 14:25:29.885894
+Job 3 switch command sent at 2025-07-10 14:25:30.436928
+Trigger command sent at 2025-07-10 14:25:30.637290
+Job 3 switch command sent at 2025-07-10 14:25:31.238363
+Trigger command sent at 2025-07-10 14:25:31.438722
+Job 3 switch command sent at 2025-07-10 14:25:32.089824
+Trigger command sent at 2025-07-10 14:25:32.290208
+Job 3 switch command sent at 2025-07-10 14:25:32.891231
+Trigger command sent at 2025-07-10 14:25:33.091579
+Job 3 switch command sent at 2025-07-10 14:25:33.742580
+Trigger command sent at 2025-07-10 14:25:33.943010
+Job 3 switch command sent at 2025-07-10 14:25:34.493887
+Trigger command sent at 2025-07-10 14:25:34.694151
+Job 3 switch command sent at 2025-07-10 14:25:35.295095
+Trigger command sent at 2025-07-10 14:25:35.495384
+Job 3 switch command sent at 2025-07-10 14:25:36.146409
+Trigger command sent at 2025-07-10 14:25:36.346761
+Job 3 switch command sent at 2025-07-10 14:25:36.897794
+Trigger command sent at 2025-07-10 14:25:37.098143
+Job 3 switch command sent at 2025-07-10 14:25:37.699283
+Trigger command sent at 2025-07-10 14:25:37.899739
+Job 3 switch command sent at 2025-07-10 14:25:38.550788
+Trigger command sent at 2025-07-10 14:25:38.751062
+Job 3 switch command sent at 2025-07-10 14:25:39.301958
+Trigger command sent at 2025-07-10 14:25:39.502217
+Job 3 switch command sent at 2025-07-10 14:25:40.153246
+Trigger command sent at 2025-07-10 14:25:40.353634
+Job 3 switch command sent at 2025-07-10 14:25:41.004673
+Trigger command sent at 2025-07-10 14:25:41.205032
+Job 3 switch command sent at 2025-07-10 14:25:41.806128
+Trigger command sent at 2025-07-10 14:25:42.006480
+Job 3 switch command sent at 2025-07-10 14:25:42.607559
+Trigger command sent at 2025-07-10 14:25:42.807915
+Job 3 switch command sent at 2025-07-10 14:25:43.408951
+Trigger command sent at 2025-07-10 14:25:43.609526
+Job 3 switch command sent at 2025-07-10 14:25:44.210556
+Trigger command sent at 2025-07-10 14:25:44.410818
+Job 3 switch command sent at 2025-07-10 14:25:45.012037
+Trigger command sent at 2025-07-10 14:25:45.212403
+Job 3 switch command sent at 2025-07-10 14:25:45.863595
+Trigger command sent at 2025-07-10 14:25:46.063955
+Job 3 switch command sent at 2025-07-10 14:25:46.665031
+Trigger command sent at 2025-07-10 14:25:46.865361
+Job 3 switch command sent at 2025-07-10 14:25:47.466271
+Trigger command sent at 2025-07-10 14:25:47.666669
+Job 3 switch command sent at 2025-07-10 14:25:48.367791
+Trigger command sent at 2025-07-10 14:25:48.568103
+Job 3 switch command sent at 2025-07-10 14:25:49.169161
+Trigger command sent at 2025-07-10 14:25:49.369532
+Job 3 switch command sent at 2025-07-10 14:25:49.920554
+Trigger command sent at 2025-07-10 14:25:50.120939
+Job 3 switch command sent at 2025-07-10 14:25:50.822080
+Trigger command sent at 2025-07-10 14:25:51.022435
+Job 3 switch command sent at 2025-07-10 14:25:51.573448
+Trigger command sent at 2025-07-10 14:25:51.773802
+Job 3 switch command sent at 2025-07-10 14:25:52.374783
+Trigger command sent at 2025-07-10 14:25:52.575136
+Job 3 switch command sent at 2025-07-10 14:25:53.176220
+Trigger command sent at 2025-07-10 14:25:53.376589
+Job 3 switch command sent at 2025-07-10 14:25:54.027744
+Trigger command sent at 2025-07-10 14:25:54.228096
+Job 3 switch command sent at 2025-07-10 14:25:54.829085
+Trigger command sent at 2025-07-10 14:25:55.029443
+Job 3 switch command sent at 2025-07-10 14:25:55.680580
+Trigger command sent at 2025-07-10 14:25:55.880915
+Job 3 switch command sent at 2025-07-10 14:25:56.482045
+Trigger command sent at 2025-07-10 14:25:56.682399
+Job 3 switch command sent at 2025-07-10 14:25:57.333582
+Trigger command sent at 2025-07-10 14:25:57.533903
+Job 3 switch command sent at 2025-07-10 14:25:58.185199
+Trigger command sent at 2025-07-10 14:25:58.385738
+Job 3 switch command sent at 2025-07-10 14:25:58.936709
+Trigger command sent at 2025-07-10 14:25:59.136987
+Job 3 switch command sent at 2025-07-10 14:25:59.788010
+Trigger command sent at 2025-07-10 14:25:59.988376
+Job 3 switch command sent at 2025-07-10 14:26:00.589491
+Trigger command sent at 2025-07-10 14:26:00.789847
+Job 3 switch command sent at 2025-07-10 14:26:01.441011
+Trigger command sent at 2025-07-10 14:26:01.641357
+Job 3 switch command sent at 2025-07-10 14:26:02.242548
+Trigger command sent at 2025-07-10 14:26:02.442902
+Job 3 switch command sent at 2025-07-10 14:26:03.044015
+Trigger command sent at 2025-07-10 14:26:03.244374
+Job 3 switch command sent at 2025-07-10 14:26:03.845507
+Trigger command sent at 2025-07-10 14:26:04.045735
+Job 3 switch command sent at 2025-07-10 14:26:04.646800
+Trigger command sent at 2025-07-10 14:26:04.847146
+Job 3 switch command sent at 2025-07-10 14:26:05.448201
+Trigger command sent at 2025-07-10 14:26:05.648464
+2025-07-10 18:45:27    --- New session started by viiiiiiiii ---
+2025-07-10 18:49:14    --- New session started by dfghjk ---
+2025-07-10 18:49:35    --- New session started by sdfghj ---
+2025-07-10 18:49:38    Job 1 completed by sdfghj in 1.18s with 0 retries
+2025-07-10 18:49:41    Job 2 completed by sdfghj in 1.39s with 2 retries
+2025-07-10 18:49:44    Job 3 completed by sdfghj in 0.20s with 0 retries
+2025-07-10 18:49:44    Cycle of 3 jobs completed by sdfghj in 9.64 seconds
+2025-07-10 18:49:54    --- New session started by sdfghj ---
+2025-07-10 18:49:57    Job 1 completed by sdfghj in 1.18s with 0 retries
+2025-07-10 18:50:19    Job 2 completed by sdfghj in 1.64s with 3 retries
+2025-07-10 18:50:23    Job 3 completed by sdfghj in 0.20s with 0 retries
+2025-07-10 18:50:23    Cycle of 3 jobs completed by sdfghj in 28.18 seconds
+2025-07-10 18:50:45    --- New session started by dfghjk ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 18:50:46.726108
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 18:50:46.727089
+Both sensors triggered — proceeding to job at 2025-07-10 18:50:46.727182
+Job 1 switch command sent at 2025-07-10 18:50:46.727251
+Trigger command sent at 2025-07-10 18:50:47.801015
+2025-07-10 18:50:47.951335    Job 1 completed by dfghjk in 1.22s with 0 retries
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 18:50:52.161167
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 18:50:52.163454
+Both sensors triggered — proceeding to job at 2025-07-10 18:50:52.163591
+Job 2 switch command sent at 2025-07-10 18:50:52.163701
+Trigger command sent at 2025-07-10 18:50:52.363893
+2025-07-10 18:50:52.914554    Job 2 completed by dfghjk in 0.75s with 0 retries
+Sensor 1 (GPIO17) pulse detected at 2025-07-10 18:50:55.599885
+Sensor 2 (GPIO27) pulse detected at 2025-07-10 18:50:55.604177
+Both sensors triggered — proceeding to job at 2025-07-10 18:50:55.604310
+Job 3 switch command sent at 2025-07-10 18:50:55.604469
+Trigger command sent at 2025-07-10 18:50:55.804663
+2025-07-10 18:50:56.305265    Job 3 completed by dfghjk in 0.70s with 0 retries
+2025-07-10 18:50:56    Cycle of 3 jobs completed by dfghjk in 11.29 seconds
+2025-07-11 09:49:26    --- New session started by dfghjk ---
+2025-07-11 09:49:54    --- New session started by fghjk ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-11 09:49:56.041625
+Sensor 1 (GPIO17) pulse detected at 2025-07-11 09:49:56.054359
+Both sensors triggered — proceeding to job at 2025-07-11 09:49:56.054438
+Job 1 switch command sent at 2025-07-11 09:49:56.054511
+Trigger command sent at 2025-07-11 09:49:57.217685
+Job 1 switch command sent at 2025-07-11 09:49:57.368064
+Trigger command sent at 2025-07-11 09:49:57.568260
+Job 1 switch command sent at 2025-07-11 09:49:58.519642
+Trigger command sent at 2025-07-11 09:49:58.719917
+Job 1 switch command sent at 2025-07-11 09:49:59.621164
+Trigger command sent at 2025-07-11 09:49:59.821427
+Job 1 switch command sent at 2025-07-11 09:50:00.722654
+Trigger command sent at 2025-07-11 09:50:00.922919
+Job 1 switch command sent at 2025-07-11 09:50:01.824115
+Trigger command sent at 2025-07-11 09:50:02.024333
+Job 1 switch command sent at 2025-07-11 09:50:02.925532
+Trigger command sent at 2025-07-11 09:50:03.125754
+Job 1 switch command sent at 2025-07-11 09:50:04.027056
+Trigger command sent at 2025-07-11 09:50:04.227330
+Job 1 switch command sent at 2025-07-11 09:50:05.128583
+Trigger command sent at 2025-07-11 09:50:05.328836
+Job 1 switch command sent at 2025-07-11 09:50:06.230075
+Trigger command sent at 2025-07-11 09:50:06.430318
+Job 1 switch command sent at 2025-07-11 09:50:07.331525
+Trigger command sent at 2025-07-11 09:50:07.531789
+Job 1 switch command sent at 2025-07-11 09:50:08.432972
+Trigger command sent at 2025-07-11 09:50:08.633231
+Job 1 switch command sent at 2025-07-11 09:50:09.534512
+Trigger command sent at 2025-07-11 09:50:09.734796
+Job 1 switch command sent at 2025-07-11 09:50:10.635997
+Trigger command sent at 2025-07-11 09:50:10.836241
+Job 1 switch command sent at 2025-07-11 09:50:11.737480
+Trigger command sent at 2025-07-11 09:50:11.937745
+Job 1 switch command sent at 2025-07-11 09:50:12.838870
+Trigger command sent at 2025-07-11 09:50:13.039125
+2025-07-11 09:52:05    --- New session started by vikram...... ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-11 09:52:06.877098
+Sensor 1 (GPIO17) pulse detected at 2025-07-11 09:52:06.889182
+Both sensors triggered — proceeding to job at 2025-07-11 09:52:06.889321
+Job 1 switch command sent at 2025-07-11 09:52:06.889449
+Trigger command sent at 2025-07-11 09:52:07.908529
+Job 1 switch command sent at 2025-07-11 09:52:12.914367
+Trigger command sent at 2025-07-11 09:52:13.114690
+2025-07-11 09:52:13.915765    Job 1 completed by vikram...... in 7.03s with 1 retries
+2025-07-11 09:52:24    --- New session started by /...vikram..../ ---
+Sensor 2 (GPIO27) pulse detected at 2025-07-11 09:52:25.833031
+Sensor 1 (GPIO17) pulse detected at 2025-07-11 09:52:25.844667
+Both sensors triggered — proceeding to job at 2025-07-11 09:52:25.844792
+Job 1 switch command sent at 2025-07-11 09:52:25.844942
+Trigger command sent at 2025-07-11 09:52:26.868430
+2025-07-11 09:52:27.018850    Job 1 completed by /...vikram..../ in 1.17s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-11 09:52:29.136749
+Sensor 1 (GPIO17) pulse detected at 2025-07-11 09:52:29.137467
+Both sensors triggered — proceeding to job at 2025-07-11 09:52:29.137550
+Job 2 switch command sent at 2025-07-11 09:52:29.137653
+Trigger command sent at 2025-07-11 09:52:29.337860
+2025-07-11 09:52:29.888663    Job 2 completed by /...vikram..../ in 0.75s with 0 retries
+Sensor 2 (GPIO27) pulse detected at 2025-07-11 09:52:31.424660
+Sensor 1 (GPIO17) pulse detected at 2025-07-11 09:52:31.431950
+Both sensors triggered — proceeding to job at 2025-07-11 09:52:31.432131
+Job 3 switch command sent at 2025-07-11 09:52:31.432344
+Trigger command sent at 2025-07-11 09:52:31.632549
+2025-07-11 09:52:32.133238    Job 3 completed by /...vikram..../ in 0.70s with 0 retries
+2025-07-11 09:52:32    Cycle of 3 jobs completed by /...vikram..../ in 7.91 seconds

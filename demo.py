@@ -71,24 +71,24 @@ def result_listener():
 def on_trigger1():
     global job_in_progress
     if not job_in_progress:
-        print(f"[🔔] Sensor 1 (GPIO17) pulse detected at {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}")
+        print(f" Sensor 1 (GPIO17) pulse detected at {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}")
         trigger1_detected.set()
         check_dual_trigger()
     else:
-        print("[⚠️] Ignored trigger from Sensor 1 — job already in progress")
+        print(" Ignored trigger from Sensor 1 — job already in progress")
 
 def on_trigger2():
     global job_in_progress
     if not job_in_progress:
-        print(f"[🔔] Sensor 2 (GPIO27) pulse detected at {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}")
+        print(f" Sensor 2 (GPIO27) pulse detected at {datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}")
         trigger2_detected.set()
         check_dual_trigger()
     else:
-        print("[⚠️] Ignored trigger from Sensor 2 — job already in progress")
+        print("Ignored trigger from Sensor 2 — job already in progress")
 
 def check_dual_trigger():
     if trigger1_detected.is_set() and trigger2_detected.is_set():
-        print("[✅] Both sensors triggered — proceeding to job")
+        print(" Both sensors triggered — proceeding to job")
         trigger_received.set()
 
 # ------------------------
@@ -113,7 +113,7 @@ def run_job(job_number):
             print(f"[Trigger] Trigger sent for job {job_number} (Attempt {attempt})")
 
             wait_start = time.time()
-            timeout = 5  # wait max 5s each attempt
+            timeout =0.2  # wait max 0.2s each attempt
 
             while time.time() - wait_start < timeout:
                 if latest_result:
@@ -123,14 +123,14 @@ def run_job(job_number):
                         job_time = time.time() - start_time
                         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         log_line = f"{timestamp}    Job {job_number} completed by {operator_name} in {job_time:.2f}s with {attempt - 1} retries"
-                        print(f"[✅] {log_line}")
+                        print(f" {log_line}")
                         logger.info(log_line)
                         return
                     elif "false" in result:
-                        print(f"[❌] Job {job_number} failed (Attempt {attempt}) — retrying...")
+                        print(f" Job {job_number} failed (Attempt {attempt}) — retrying...")
                         break  # retry
                     else:
-                        print(f"[⚠️] Unknown result: {result}")
+                        print(f" Unknown result: {result}")
                         break
                 time.sleep(0.05)
 
