@@ -4,6 +4,7 @@ import time
 from gpiozero import Button
 from datetime import datetime
 import logging
+from led_asms import LED_Asms
 
 # ------------------------
 # Logging Setup
@@ -37,6 +38,10 @@ trigger2_detected = threading.Event()
 cycle_start = None
 operator_name = ""
 job_in_progress = False
+
+# Create an instance of the LED_Asms class
+led_job = LED_Asms()
+
 
 # ------------------------
 # Command Builders
@@ -115,11 +120,11 @@ def run_job(job_number):
             logger.info(f"Job {job_number} switch command sent at {job_cmd_time}")
 
             # Non-blocking response read (short timeout)
-           # connected_sock.settimeout(0.05)
-           # try:
-            #    _ = connected_sock.recv(1024)
-           # except socket.timeout:
-            #    pass  # Continue immediately if no response
+            connected_sock.settimeout(0.05)
+            try:
+                _ = connected_sock.recv(1024)
+            except socket.timeout:
+                pass  # Continue immediately if no response
 
             # Send trigger command immediately
             trig_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -139,6 +144,7 @@ def run_job(job_number):
                         job_time = time.time() - start_time
                         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
                         print(f" .............JOB {job_number} PASS ...............")
+                        led_job.led_true_func()
                         msg = f"Job {job_number} completed by {operator_name} in {job_time:.2f}s with {attempt - 1} retries at {ts} "
                         print(f" {msg}")
                         logger.info(msg)
