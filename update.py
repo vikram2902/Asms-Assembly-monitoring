@@ -4,6 +4,7 @@ import time
 from gpiozero import Button
 from datetime import datetime
 import logging
+from led_asms import LED_Asms
 
 # ------------------------
 # Logging Setup
@@ -28,7 +29,7 @@ TRIGGER2_PIN = 27  # GPIO27
 # ------------------------
 # State Variables
 # ------------------------
-latest_result = None
+latest_result = {"timestamp": 0, "value": None}
 current_job = 1
 connected_sock = None
 trigger_received = threading.Event()
@@ -37,6 +38,7 @@ trigger2_detected = threading.Event()
 cycle_start = None
 operator_name = ""
 job_in_progress = False
+led_job = LED_Asms()
 
 # ------------------------
 # Command Builders
@@ -61,7 +63,10 @@ def result_listener():
             while True:
                 data = result_sock.recv(1024)
                 if data:
-                    latest_result = data.decode(errors='ignore').strip().lower()
+                    latest_result = {
+                        "timestamp": time.time(),
+                        "value": data.decode(errors='ignore').strip().lower()
+                    }
     except Exception as e:
         print(f"[Result Thread] Error: {e}")
 
@@ -72,23 +77,23 @@ def on_trigger1():
     global job_in_progress
     if not job_in_progress:
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-        print(f"[\U0001F514] Sensor 1 (GPIO17) pulse detected at {ts}")
+        print(f" Sensor 1 (GPIO17) pulse detected at {ts}")
         logger.info(f"Sensor 1 (GPIO17) pulse detected at {ts}")
         trigger1_detected.set()
         check_dual_trigger()
     else:
-        print("[⚠️] Ignored trigger from Sensor 1 — job already in progress")
+        print(" Ignored trigger from Sensor 1 — job already in progress")
 
 def on_trigger2():
     global job_in_progress
     if not job_in_progress:
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-        print(f"[\U0001F514] Sensor 2 (GPIO27) pulse detected at {ts}")
+        print(f" Sensor 2 (GPIO27) pulse detected at {ts}")
         logger.info(f"Sensor 2 (GPIO27) pulse detected at {ts}")
         trigger2_detected.set()
         check_dual_trigger()
     else:
-        print("[⚠️] Ignored trigger from Sensor 2 — job already in progress")
+        print(" Ignored trigger from Sensor 2 — job already in progress")
 
 def check_dual_trigger():
     if trigger1_detected.is_set() and trigger2_detected.is_set():
@@ -98,51 +103,62 @@ def check_dual_trigger():
         trigger_received.set()
 
 # ------------------------
+# Helper
+# ------------------------
+def flush_old_result():
+    global latest_result
+    latest_result = {"timestamp": 0, "value": None}
+
+# ------------------------
 # Job Execution with Retry and Time Logs
 # ------------------------
 def run_job(job_number):
     global latest_result, connected_sock
-
     start_time = time.time()
     attempt = 0
+    timeout = 6  # seconds
 
     while True:
         attempt += 1
+        flush_old_result()
+
         try:
             job_cmd_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
             connected_sock.sendall(build_command(job_number))
-            print(f"[🔁] Job {job_number} switch command sent at {job_cmd_time}")
+            print(f" Job {job_number} switch command sent at {job_cmd_time}")
             logger.info(f"Job {job_number} switch command sent at {job_cmd_time}")
 
-            _ = connected_sock.recv(1024)
-           # time.sleep(0.2)
+            time.sleep(0.4)  # wait for camera to switch job
 
             trig_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
             connected_sock.sendall(build_trigger_command())
-            print(f"[📸] Trigger command sent at {trig_time}")
+            print(f" Trigger command sent at {trig_time}")
             logger.info(f"Trigger command sent at {trig_time}")
 
             wait_start = time.time()
-            timeout = 5  # seconds
-
             while time.time() - wait_start < timeout:
-                if latest_result:
-                    result = latest_result
-                    latest_result = None
+                result_obj = latest_result
+                if result_obj["timestamp"] > start_time:
+                    result = result_obj["value"]
                     if "true" in result:
                         job_time = time.time() - start_time
                         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-                        msg = f"{ts}    Job {job_number} completed by {operator_name} in {job_time:.2f}s with {attempt - 1} retries"
-                        print(f"[✅] {msg}")
+                        print(f" ✅ JOB {job_number} PASS")
+                        led_job.led_true_func()
+                        msg = f"Job {job_number} completed by {operator_name} in {job_time:.2f}s with {attempt - 1} retries at {ts}"
+                        print(f" {msg}")
                         logger.info(msg)
                         return
                     elif "false" in result:
-                        print(f"[❌] Job {job_number} failed (Attempt {attempt}) — retrying...")
+                        print(f" ❌ Job {job_number} failed (Attempt {attempt}) — retrying...")
                         break
                     else:
-                        print(f"[⚠️] Unknown result: {result}")
+                        print(f" ⚠️ Unknown result: {result} (ignored)")
                         break
                 time.sleep(0.05)
+            else:
+                print(f" ⏱ Timeout waiting for result (Attempt {attempt}) — retrying...")
+
         except Exception as e:
             print(f"[Error] During job {job_number}: {e}")
             return
@@ -185,8 +201,8 @@ def main():
 
             if current_job % 3 == 0:
                 cycle_time = time.time() - cycle_start
-                msg = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}    Cycle of 3 jobs completed by {operator_name} in {cycle_time:.2f} seconds"
-                print(f"\n[Cycle ✅] {msg}\n")
+                msg = f" Cycle of 3 jobs completed by {operator_name} in {cycle_time:.2f} seconds at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  "
+                print(f"\n[Cycle ] {msg}\n")
                 logger.info(msg)
                 cycle_start = time.time()
 
