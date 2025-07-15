@@ -3,7 +3,7 @@ from time import sleep
 
 class LED_Asms:
     def __init__(self):
-        self.led_true = LED(22)
+        self.led_true = LED(5)
         self.led_false = LED(23)
 
     def led_true_func(self):

@@ -2,9 +2,9 @@ from gpiozero import Button
 from signal import pause
 
 # Use GPIO17 (Physical pin 11)
-TRIGGER_PIN = 17
+TRIGGER_PIN = 26
 # Setup button to detect HIGH signal (3.3V pulse)
-trigger = Button(TRIGGER_PIN, pull_up=False)
+trigger = Button(TRIGGER_PIN, pull_up=True)
 
 def on_detect():
     print("[✅] HIGH pulse detected on GPIO17")

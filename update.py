@@ -38,16 +38,29 @@ trigger2_detected = threading.Event()
 cycle_start = None
 operator_name = ""
 job_in_progress = False
+
+# ------------------------
+# LED instance
+# ------------------------
 led_job = LED_Asms()
 
 # ------------------------
 # Command Builders
 # ------------------------
 def build_command(job_number: int) -> bytes:
-    return b'\x02' + f"set job {job_number}".encode('ascii') + b'\x03'
+    cmd = f"set job {job_number}"
+    print(f"[Debug] Sending command: {cmd}")
+    return b'\x02' + cmd.encode('ascii') + b'\x03'
 
 def build_trigger_command() -> bytes:
     return b'\x02trigger\x03'
+
+# ------------------------
+# Flush old result
+# ------------------------
+def flush_old_result():
+    global latest_result
+    latest_result = {"timestamp": 0, "value": None}
 
 # ------------------------
 # Result Listener Thread
@@ -78,7 +91,6 @@ def on_trigger1():
     if not job_in_progress:
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         print(f" Sensor 1 (GPIO17) pulse detected at {ts}")
-        logger.info(f"Sensor 1 (GPIO17) pulse detected at {ts}")
         trigger1_detected.set()
         check_dual_trigger()
     else:
@@ -89,7 +101,6 @@ def on_trigger2():
     if not job_in_progress:
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         print(f" Sensor 2 (GPIO27) pulse detected at {ts}")
-        logger.info(f"Sensor 2 (GPIO27) pulse detected at {ts}")
         trigger2_detected.set()
         check_dual_trigger()
     else:
@@ -99,72 +110,79 @@ def check_dual_trigger():
     if trigger1_detected.is_set() and trigger2_detected.is_set():
         Dual_Trigger = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         print(f" Both sensors triggered — proceeding to job at {Dual_Trigger}")
-        logger.info(f"Both sensors triggered — proceeding to job at {Dual_Trigger}")
         trigger_received.set()
 
 # ------------------------
-# Helper
-# ------------------------
-def flush_old_result():
-    global latest_result
-    latest_result = {"timestamp": 0, "value": None}
-
-# ------------------------
-# Job Execution with Retry and Time Logs
+# Job Execution with Retry Limit
 # ------------------------
 def run_job(job_number):
     global latest_result, connected_sock
+
     start_time = time.time()
     attempt = 0
     timeout = 6  # seconds
+    max_attempts = 5
 
-    while True:
+    while attempt < max_attempts:
         attempt += 1
         flush_old_result()
 
         try:
+            # Send job switch
             job_cmd_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
             connected_sock.sendall(build_command(job_number))
             print(f" Job {job_number} switch command sent at {job_cmd_time}")
-            logger.info(f"Job {job_number} switch command sent at {job_cmd_time}")
 
-            time.sleep(0.4)  # wait for camera to switch job
+            print(f" [Job Switch] Waiting 1.5s for camera to apply Job {job_number}")
+            time.sleep(1.5)
 
+            flush_old_result()
+
+            # Send trigger
             trig_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+            trigger_sent_time = time.time()
             connected_sock.sendall(build_trigger_command())
             print(f" Trigger command sent at {trig_time}")
-            logger.info(f"Trigger command sent at {trig_time}")
 
             wait_start = time.time()
             while time.time() - wait_start < timeout:
                 result_obj = latest_result
-                if result_obj["timestamp"] > start_time:
+                if result_obj["timestamp"] > trigger_sent_time:
                     result = result_obj["value"]
+                    print(f" [Raw Result] Received: {result}")
+
                     if "true" in result:
                         job_time = time.time() - start_time
                         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-                        print(f" ✅ JOB {job_number} PASS")
+                        print(f" /................... JOB {job_number} PASS....................../")
                         led_job.led_true_func()
                         msg = f"Job {job_number} completed by {operator_name} in {job_time:.2f}s with {attempt - 1} retries at {ts}"
                         print(f" {msg}")
                         logger.info(msg)
-                        return
+                        return True
+
                     elif "false" in result:
-                        print(f" ❌ Job {job_number} failed (Attempt {attempt}) — retrying...")
+                        print(f"  Job {job_number} failed (Attempt {attempt}) — retrying...")
                         break
                     else:
-                        print(f" ⚠️ Unknown result: {result} (ignored)")
+                        print(f"  Unknown result: {result} — retrying...")
                         break
                 time.sleep(0.05)
             else:
-                print(f" ⏱ Timeout waiting for result (Attempt {attempt}) — retrying...")
+                print(f"  Timeout waiting for result (Attempt {attempt}) — retrying...")
 
         except Exception as e:
             print(f"[Error] During job {job_number}: {e}")
-            return
+            return False
+
+    # All attempts failed
+    print(f" [Limit Exceeded] Job {job_number} failed after {max_attempts} attempts.")
+    logger.info(f"Job {job_number} failed after {max_attempts} attempts at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    led_job.led_false_func()
+    return False
 
 # ------------------------
-# Main Execution
+# Main Function
 # ------------------------
 def main():
     global connected_sock, current_job, cycle_start, operator_name, job_in_progress
@@ -193,21 +211,24 @@ def main():
             trigger_received.clear()
             job_in_progress = True
 
-            run_job(current_job)
+            success = run_job(current_job)
 
             job_in_progress = False
             trigger1_detected.clear()
             trigger2_detected.clear()
 
-            if current_job % 3 == 0:
-                cycle_time = time.time() - cycle_start
-                msg = f" Cycle of 3 jobs completed by {operator_name} in {cycle_time:.2f} seconds at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  "
-                print(f"\n[Cycle ] {msg}\n")
-                logger.info(msg)
-                cycle_start = time.time()
+            if success:
+                if current_job % 3 == 0:
+                    cycle_time = time.time() - cycle_start
+                    msg = f" Cycle of 3 jobs completed by {operator_name} in {cycle_time:.2f} seconds at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+                    print(f"\n[Cycle ] {msg}\n")
+                    logger.info(msg)
+                    cycle_start = time.time()
 
-            print(f"[System] Job {current_job} complete. Waiting for BOTH triggers again...")
-            current_job += 1
+                current_job += 1
+                print(f"[System] Job {current_job - 1} complete. Waiting for BOTH triggers again...")
+            else:
+                print(f"[System] Max retries reached. Waiting for triggers to retry Job {current_job}...")
 
     except KeyboardInterrupt:
         print("\n[System] Exiting gracefully by Ctrl+C")
