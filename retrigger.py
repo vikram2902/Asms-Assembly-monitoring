@@ -6,7 +6,7 @@ from time import sleep
 Button.pin_factory = LGPIOFactory()
 
 # GPIO26 = Pin 37
-button = Button(26, pull_up=False)
+button = Button(26, pull_up=True)
 
 print("Press the button connected to GPIO26...")
 

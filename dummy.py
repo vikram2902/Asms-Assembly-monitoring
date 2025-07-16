@@ -29,7 +29,7 @@ COMMAND_PORT = 2300
 RESULT_PORT = 2300
 TRIGGER1_PIN = 17  # GPIO17
 TRIGGER2_PIN = 27  # GPIO27
-RESET_PIN = 26     # GPIO22 for reset button
+RESET_PIN = 26     # GPIO26 for reset button
 
 # ------------------------
 # State Variables
@@ -126,12 +126,18 @@ def check_dual_trigger():
         trigger_received.set()
 
 # ------------------------
-# Reset Button Logic
+# ✅ Reset Button Logic — Updated
 # ------------------------
 def on_reset():
-    global reset_requested
+    global reset_requested, trigger1_detected, trigger2_detected, trigger_received, job_in_progress
     print("\n[RESET] Reset button pressed. Restarting the system...\n")
+
+    # Forcefully set reset flag and unblock any waits
     reset_requested.set()
+    trigger_received.set()          # Unblock wait in main()
+    trigger1_detected.clear()
+    trigger2_detected.clear()
+    job_in_progress = False         # Mark job as not in progress
 
 reset_btn.when_pressed = on_reset
 
@@ -164,6 +170,9 @@ def run_job(job_number):
 
             wait_start = time.time()
             while time.time() - wait_start < timeout:
+                if reset_requested.is_set():
+                    return False
+
                 result_obj = latest_result
                 if result_obj["timestamp"] > trigger_sent_time:
                     result = result_obj["value"]
